@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>测试用网站</title>
+    <script type="text/javascript"
+        src="https://cn-shanghai-aliyun-cloudauth.oss-cn-shanghai.aliyuncs.com/web_sdk_js/jsvm_all.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        function sendPostRequest() {
+            var xhr = new XMLHttpRequest();
+            var u = document.getElementById("url").value;
+            var url = `${u}/web/initVerifyFace`
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                console.log(1)
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response);
+                    window.open(response.data.CertifyUrl, "_blank");
+                } else if (xhr.readyState === 4) {
+                    alert("输入有误")
+                    return
+                }
+            };
+            var certName = document.getElementById("certName").value;
+            var certNo = document.getElementById("certNo").value;
+
+            if (certName == "" || certNo == "" || u == "") {
+                console.log("empty")
+                alert("不可为空")
+                return
+            }
+            var data = JSON.stringify({
+                "certName": certName,
+                "certNo": certNo,
+                "vendor": "ST1",
+                "ip": "0.0.0.0",
+                "userID": "test_user_id",
+                "account": "test_account",
+                "metaInfo": window.getMetaInfo(),
+                "callbackUrl": `${u}/callback/verifyFace`,
+                "sceneType": 1,
+                "returnUrl": `${u}/return`,
+            });
+            console.log(data)
+            xhr.send(data);
+        }
+    </script>
+</head>
+<header>
+    <h1>测试网站</h1>
+</header>
+
+<body>
+    <form>
+        <label for="url">测试网站:</label>
+        <input type="text" id="url" name="url"><br><br>
+        <label for="certName">用户的姓名:</label>
+        <input type="text" id="certName" name="certName"><br><br>
+        <label for="certNo">用户的证件号码:</label>
+        <input type="text" id="certNo" name="certNo"><br><br>
+        <button type="button" onclick="sendPostRequest()">验证</button>
+    </form>
+</body>
+
+</html>
