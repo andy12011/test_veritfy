@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>测试用网站</title>
+    <title>迷你商城系统 人脸验证 测试V1.0</title>
     <script type="text/javascript"
         src="https://cn-shanghai-aliyun-cloudauth.oss-cn-shanghai.aliyuncs.com/web_sdk_js/jsvm_all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -10,7 +10,7 @@
     <script>
         function sendPostRequest() {
             var xhr = new XMLHttpRequest();
-            var u = document.getElementById("url").value;
+            var u = 'https://humanface.21ad6a.app'
             var url = `${u}/web/initVerifyFace`
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
@@ -28,7 +28,7 @@
             var certName = document.getElementById("certName").value;
             var certNo = document.getElementById("certNo").value;
 
-            if (certName == "" || certNo == "" || u == "") {
+            if (certName == "" || certNo == "") {
                 console.log("empty")
                 alert("不可为空")
                 return
@@ -56,8 +56,6 @@
 
 <body>
     <form>
-        <label for="url">测试网站:</label>
-        <input type="text" id="url" name="url"><br><br>
         <label for="certName">用户的姓名:</label>
         <input type="text" id="certName" name="certName"><br><br>
         <label for="certNo">用户的证件号码:</label>
